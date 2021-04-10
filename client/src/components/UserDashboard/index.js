@@ -9,12 +9,12 @@ import DashComp from "./DashComp";
 
 export default function UserDashboard() {
   const [user, setuser] = useContext(UserContext);
-  // const [socket, setsocket] = useContext(SocketContext);
+  const [socket, setsocket] = useContext(SocketContext);
   const [ambulances, setambulances] = useState([]);
   const history = useHistory();
   useEffect(() => {
-    // const skt = socketioclient(API);
-    // setsocket(skt);
+    const skt = socketioclient(API);
+    setsocket(skt);
     const token = localStorage.getItem("jwt").toString();
     console.log("Bearer" + token);
     // if (!token) {

@@ -1,19 +1,22 @@
 import React, { useRef, useEffect, useContext } from "react";
 import mapboxgl from "mapbox-gl";
-import { getCurrentLocation } from "./config/location";
+import { getCurrentLocation } from "../config/location";
+import { SocketContext } from "../Contexts/SocketContext";
+import { UserContext } from "../Contexts/UserContext";
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_API;
 
-const RouteMap = ({ lng, lat, user}) => {
+const RouteMap = ({ lng = 80.9462, lat = 26.8467}) => {
     const mapContainerRef = useRef(null);
+    const [user, setUser] = useContext(UserContext);
     const [socket, setsocket] = useContext(SocketContext);
-  
+
     useEffect(() => {
       const map = new mapboxgl.Map({
         container: mapContainerRef.current,
         style: "mapbox://styles/mapbox/streets-v11",
         center: [lng, lat],
-        zoom: zoom,
+        zoom: 16,
       });
 
       map.addControl(new mapboxgl.NavigationControl(), "top-right");
@@ -25,7 +28,7 @@ const RouteMap = ({ lng, lat, user}) => {
 
       const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
 
-      socket.emit("addUser", user.details, (error) => {
+      socket.emit("addUser", user, (error) => {
         if (error) {
           console.log(error);
         }

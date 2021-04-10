@@ -1,6 +1,8 @@
 import React from "react";
 import { Nav, Tab, Row, Col } from "react-bootstrap";
 import DiagnosisCard from "./DiagnosisCard";
+import RouteMap from "../RouteMap";
+
 export default function DashComp({ user }) {
   console.log(user);
   return (
@@ -105,7 +107,7 @@ export default function DashComp({ user }) {
                 </div>
               </Tab.Pane>
               <Tab.Pane eventKey="fifth">
-                map and get nearest ambulance on click
+                <RouteMap/>
               </Tab.Pane>
             </Tab.Content>
           </div>
