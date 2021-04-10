@@ -32,11 +32,7 @@ function App() {
             <Route exact path="/driverlogin" component={DriverLogin} />
           </DriverProvider>
           <UserProvider>
-            <PrivateRoute
-              exact
-              path="/userdashboard"
-              component={UserDashboard}
-            />
+            <Route exact path="/userdashboard" component={UserDashboard} />
           </UserProvider>
         </SocketProvider>
         <Route path="/" component={PageNotFound} />
