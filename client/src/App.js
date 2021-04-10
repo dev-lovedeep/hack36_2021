@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
-import Map from "./components/Map";
 import Login from "./pages/Login";
 
 import DriverDashboard from "./components/DriverDashboard";
@@ -12,9 +11,9 @@ import { UserProvider } from "./Contexts/UserContext";
 import SignUp from "./pages/SignUp";
 import AdminComp from "./AdminComp";
 import PageNotFound from "./pages/PageNotFound";
-import PrivateRoute from "./helper";
 import DocHome from "./pages/DocHome";
 import DocDash from "./pages/DocDash";
+import PrivateRoute from "./helper/PrivateRoute";
 
 function App() {
   return (
