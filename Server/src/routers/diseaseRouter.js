@@ -1,7 +1,8 @@
 // Base URL :- /user
 
 const express = require("express");
-const { isSignedIn, isVerified, isAdmin } = require("../middleware");
+const { isSignedIn, isVerified, isAdmin, isDoctor } = require("../middleware");
+const { serachDisease } = require("../services/search");
 const diseaseRouter = express.Router();
 const Disease = require("../models/disease");
 var { body } = require("express-validator");
@@ -74,6 +75,15 @@ diseaseRouter.put(
     });
   }
 );
+
+diseaseRouter.post("/s", isSignedIn, isDoctor, async (req, res) => {
+  var diseaseResult = await serachDisease(req.query.search);
+  res.status(200).json({
+    diseases: diseaseResult,
+    success: true,
+  });
+});
+
 diseaseRouter.delete("/:id", isSignedIn, isAdmin, (req, res) => {
   Disease.findByIdAndDelete(req.params.id, (err, deletedDisease) => {
     if (err) {

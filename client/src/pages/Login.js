@@ -28,7 +28,6 @@ const Login = (props) => {
       //if login ok
       if (res.success) {
         setLoading(false);
-        console.log(res);
         //set token in local storage
         setAuthTokenInLocalStorage(res.token, () => {
           setRedirect(true);
@@ -54,7 +53,7 @@ const Login = (props) => {
         {/* for redirecting :when login success or is already logged in from token */}
 
         {(redirect || hasAuthTokenInLocalStorage()) && (
-          <Redirect to={fromPage} />
+          <Redirect to="/user/dashboard" />
         )}
 
         <div className="row p-4">

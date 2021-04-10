@@ -3,6 +3,7 @@ var Driver = require("../models/driver");
 exports.getDriverOwnDetails = (req, res) => {
   const data = req.root._doc; // extracting data after middleware store
   return res.status(200).json({
+    _id: data._id,
     name: data.name,
     adhaar: data.adhaar,
     dLicId: data.dLicId,
@@ -23,7 +24,7 @@ exports.editDriverDetails = (req, res) => {
     driver
       .save()
       .then((savedDriver) => {
-        return res.status(200).json({ msg: "Driver Updated!", success: true });
+        return res.status(200).json(savedDriver.transform());
       })
       .catch((err) => {
         return res.status(502).json({ error: err, success: false });
@@ -32,6 +33,8 @@ exports.editDriverDetails = (req, res) => {
 };
 
 exports.getAllDrivers = (req, res) => {
+  res.setHeader("Content-Range", "ambulance 0-10/20");
+  res.setHeader("Access-Control-Expose-Headers", "Content-Range");
   Driver.find({}).then((drivers) => {
     return res.status(200).json(drivers.map((d) => d.transform()));
   });
@@ -46,7 +49,7 @@ exports.getDriverDetails = (req, res) => {
           .status(404)
           .json({ error: "Driver not found!", success: false });
       } else {
-        return res.status(200).json({ driver: driver, success: true });
+        return res.status(200).json(driver.transform());
       }
     })
     .catch((err) => {
@@ -62,7 +65,7 @@ exports.deleteDriver = (req, res) => {
           .status(404)
           .json({ error: "Driver not found!", success: false });
       } else {
-        return res.status(200).json({ msg: "Driver Deleted", success: true });
+        return res.status(200).json(driver.transform());
       }
     })
     .catch((err) => {

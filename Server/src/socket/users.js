@@ -7,58 +7,32 @@ const users = [];
  *  details: {},
  * }
  */
-
-// const addUser = ({ id, gps, phone }) => {
-//   if (!id || !gps || !phone)
-//     return { error: "All Details Should Be Specified!!" };
-
-//   const existingUser = users.find(
-//     (user) => user.id === id || user.gps === user.gps || user.phone === phone
-//   );
-
-//   if (existingUser) return { error: "Detail Already Taken!!" };
-
-//   const user = { id, gps, phone };
-//   users.push(user);
-
-//   return { user };
-// };
-
-const addUser = (socketId, details ) => {
-
+const addUser = (socketId, newUser) => {
   const existingUser = users.find(
-    (user) => user.details._id === details._id 
+    (user) => user.details._id === newUser.details._id
   );
-
   if (existingUser) return { error: "Detail Already Taken!!" };
 
-  const user = { 
-    location: {}, 
-    socketId, 
-    details 
-  };
-  users.push(user);
-
-  return { user };
+  const addedUser = { ...newUser, socketId: socketId };
+  users.push(addedUser);
+  return { addUser };
 };
 
 const removeUser = (socketId) => {
-  const index = users.findIndex(
-    (user) => user.socketId == socketId
-  );
+  const index = users.findIndex((user) => user.socketId == socketId);
   if (index !== -1) return users.splice(index, 1)[0];
 };
 
 const updateUserLocation = (socketId, location) => {
   const index = users.findIndex((user) => user.socketId === socketId);
-  if(users[index]){
+  if (users[index]) {
     user[index].location = location;
   }
-}
+};
 
 module.exports = {
   addUser,
-  removeUser, 
-  updateUserLocation, 
-  users
+  removeUser,
+  updateUserLocation,
+  users,
 };

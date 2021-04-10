@@ -16,7 +16,7 @@ var Doctor = new Schema(
     phone: {
       type: String,
     },
-    prevPatients: [{ type: String }],
+    prevPatients: [{ name: String, id: String }],
     salt: {
       type: String,
     },
