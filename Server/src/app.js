@@ -12,6 +12,7 @@ var LocalPassportSetup = require("./config/passport-local");
 
 // importing routers
 var authRouter = require("./routers/auth");
+var userRouter = require("./routers/user");
 
 var corsOptions = {
   origin: "http://localhost:3000",
@@ -31,6 +32,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname + "../public")));
 
 app.use("/auth", authRouter);
+app.use("/user", userRouter);
 
 // Catching 404 Not Found Error
 app.use(function (req, res, next) {
