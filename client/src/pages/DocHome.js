@@ -95,7 +95,7 @@ const DocHome = () => {
                 {loading ? "checking..." : "view"}
               </button>
             </form>
-            <Link to="/doc/dashboard" className="btn btn-dark mt-4 offset-4">
+            <Link to="/doctor/dashboard" className="btn btn-dark mt-4 offset-4">
               go to dashboard
             </Link>
           </div>

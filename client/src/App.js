@@ -46,9 +46,9 @@ function App() {
               <Route exact path="/user/signup">
                 <SignUp />
               </Route>
-              <Route exact path="/user/dashboard">
+              <PrivateRoute exact path="/user/dashboard">
                 <UserDashboard />
-              </Route>
+              </PrivateRoute>
             </Switch>
           </UserProvider>
         </Route>
@@ -66,12 +66,15 @@ function App() {
         </Route>
         <Route path="/doctor">
           <Switch>
-            <Route exact path="/doctor/login">
+            <DocRoute exact path="/doctor/login">
               <DocLogin />
-            </Route>
-            <Route exact path="/doctor/dashboard">
+            </DocRoute>
+            <DocRoute exact path="/doctor">
+              <DocHome />
+            </DocRoute>
+            <DocRoute exact path="/doctor/dashboard">
               <DocDash />
-            </Route>
+            </DocRoute>
           </Switch>
         </Route>
         <Route>

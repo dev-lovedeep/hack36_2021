@@ -70,7 +70,7 @@ const DocDash = () => {
           <div>
             <p className="display-4">Fresh start</p>
             <p>as you start checking patients they will start to apper here</p>
-            <Link to="/doc" className="btn bg-primary text-white">
+            <Link to="/doctor" className="btn bg-primary text-white">
               go to search page
             </Link>
           </div>
