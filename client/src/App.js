@@ -13,6 +13,8 @@ import SignUp from "./pages/SignUp";
 import AdminComp from "./AdminComp";
 import PageNotFound from "./pages/PageNotFound";
 import PrivateRoute from "./helper";
+import DocHome from "./pages/DocHome";
+import DocDash from "./pages/DocDash";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/admin" component={AdminComp} />
+        <Route exact path="/doc" component={DocHome} />
+        <Route exact path="/doc/dasbhoard" component={DocDash} />
         <SocketProvider>
           <DriverProvider>
             <Route exact path="/driverdashboard" component={DriverDashboard} />
