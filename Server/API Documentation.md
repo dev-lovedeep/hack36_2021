@@ -19,7 +19,13 @@ BASE URL :- /auth
   > Request Body :- {licId, password}
   > Response Body :- {msg, success = true, token}, if successful (error, success = false) if failed
 - **Doctor Register :-** _POST_ -> /doc/register [FOR ADMINs ONLY]
-  > Request Body :- {docId, password, name, phone}
+  > Request Body :- {licId, password, name, phone}
+  > Response Body :- {msg, success = true}, if successful (error, success = false) if failed
+- **Driver Login :-** _POST_ -> /driver/login
+  > Request Body :- {adhaar, password}
+  > Response Body :- {msg, success = true, token}, if successful (error, success = false) if failed
+- **Driver Register :-** _POST_ -> /driver/register [FOR ADMINs ONLY]
+  > Request Body :- {licId, password, name, phone, dLicId}
   > Response Body :- {msg, success = true}, if successful (error, success = false) if failed
 
 ---
@@ -42,6 +48,44 @@ BASE URL :- /user
   > Request Body :- {pid}
   > Response Body :- {msg, success = true} if successful (error, success = false) if failed
 
-## Admin Routes
+---
 
-BASE URL :- /admin
+## Doctor Routes
+
+BASE URL :- /doc
+
+- **Get Details :-** _GET_ /me
+  > Response Body :- {name, phone, licId, [{prevPatients}]}
+- **Get All Doctors :-** _GET_ / [FOR ADMINs ONLY]
+  > Response Body :- [{Doctor}]
+- **Edit Details :-** _PUT_ /me
+  > Request Body :- {name, phone, licId}
+  > Response Body :- {msg, success = true} if successful (error, success = false) if failed
+- **Get Doctor :-** _GET_ /:doctorId
+  > Response Body :- {doctor, success = true}
+- **Edit Details :-** _PUT_ /:doctorId [FOR ADMINs ONLY]
+  > Request Body :- {name, phone, licId}
+  > Response Body :- {msg, success = true} if successful (error, success = false) if failed
+- **Delete Doctor :-** _DELETE_ /:doctorId [FOR ADMINs ONLY]
+  > Response Body :- {msg, success = true} if successful (error, success = false) if failed
+
+---
+
+## Driver Routes
+
+BASE URL :- /driver
+
+- **Get Details :-** _GET_ /me
+  > Response Body :- {name, adhaar, phone, dLicId}
+- **Get All Drivers :-** _GET_ / [FOR ADMINs ONLY]
+  > Response Body :- [{Driver}]
+- **Edit Details :-** _PUT_ /me
+  > Request Body :- {name, phone, dLicId, adhaar}
+  > Response Body :- {msg, success = true} if successful (error, success = false) if failed
+- **Get Driver :-** _GET_ /:driverId
+  > Response Body :- {driver, success = true}
+- **Edit Details :-** _PUT_ /:driverId [FOR ADMINs ONLY]
+  > Request Body :- {name, phone, licId}
+  > Response Body :- {msg, success = true} if successful (error, success = false) if failed
+- **Delete Driver :-** _DELETE_ /:driverId [FOR ADMINs ONLY]
+  > Response Body :- {msg, success = true} if successful (error, success = false) if failed
