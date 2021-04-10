@@ -1,5 +1,6 @@
 import React from "react";
 import { Nav, Tab, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import DiagnosisCard from "./DiagnosisCard";
 export default function DashComp({ user }) {
   console.log(user);
@@ -124,10 +125,13 @@ export default function DashComp({ user }) {
                           <ul className="timeline">
                             {/* looping over all the medical history */}
                             {user.medHist.map((hist) => {
+                              const date = new Date(
+                                hist.date
+                              ).toLocaleDateString();
                               return (
                                 <li className="timeline-item bg-white rounded ml-3 p-4 shadow">
                                   <div className="timeline-arrow"></div>
-                                  <h2 className="h5 mb-0">{hist.date}</h2>
+                                  <h2 className="h5 mb-0">{date}</h2>
                                   <span className="small text-secondary">
                                     doctor Id:{hist.docId}
                                   </span>

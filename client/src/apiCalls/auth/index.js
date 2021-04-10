@@ -31,6 +31,24 @@ export const registerUser = (userDetails) => {
     .catch((err) => console.log(err));
 };
 
+//get user by userid (only for doctors)
+export const getUserById = (userId) => {
+  const doctoken = hasAuthTokenInLocalStorage() && hasDocTokenInLocalStorage();
+
+  console.log("API CALL", userId.userId);
+  return fetch(`${API}/user/${userId.userId}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${doctoken}`,
+    },
+    //sending user credentials in body
+  })
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
+};
+
 // login api for doctors
 export const doclogin = (userCred) => {
   return fetch(`${API}/auth/doc/login`, {
@@ -60,6 +78,41 @@ export const addPatient = (userDetails) => {
     },
     //sending user credentials in body
     body: JSON.stringify({ patient: userDetails }),
+  })
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
+};
+
+//search user by aadhar
+
+export const searchUserByAdhaar = (adhaar) => {
+  const doctoken = hasAuthTokenInLocalStorage() && hasDocTokenInLocalStorage();
+
+  return fetch(`${API}/user/s?search=${adhaar}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${doctoken}`,
+    },
+    //sending user credentials in body
+  })
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
+};
+
+//get doctor detail(detail of logged in doctor)
+export const getDoctorDetails = () => {
+  const doctoken = hasAuthTokenInLocalStorage() && hasDocTokenInLocalStorage();
+
+  return fetch(`${API}/doc/me`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${doctoken}`,
+    },
+    //sending user credentials in body
   })
     .then((res) => res.json())
     .catch((err) => console.log(err));
