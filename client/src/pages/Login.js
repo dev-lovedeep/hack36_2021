@@ -28,7 +28,6 @@ const Login = () => {
       //if login ok
       if (res.success) {
         setLoading(false);
-        console.log(res);
         //set token in local storage
         setAuthTokenInLocalStorage(res.token, () => {
           setRedirect(true);
@@ -42,7 +41,43 @@ const Login = () => {
     });
   };
 
-  return <Base title="login">yo</Base>;
+  return (
+    <Base title="login">
+      <div>
+        {/* for redirecting :when login success or is already logged in from token */}
+
+        {(redirect || hasAuthTokenInLocalStorage()) && (
+          <Redirect to="/userdashboard" />
+        )}
+
+        <div className="row p-4">
+          {/* left part form*/}
+          <div className="col-md-5 col-sm-10 offset-md-1 p-4 bg-dark rounded ">
+            <h1 className="mb-4 text-white fw-bold display-5 h1">
+              Hope,
+              <br /> you are all fine
+            </h1>
+            {err && (
+              <div class="alert alert-danger form-control" role="alert">
+                email or password did not matched
+              </div>
+            )}
+            <LoginForm
+              userDetails={userDetails}
+              setUserDetails={setUserDetails}
+              handleSubmit={handleSubmit}
+              loading={loading}
+            />
+          </div>
+
+          {/* right part image*/}
+          <div className="col-md col-sm-10 d-none d-md-flex justify-content-center align-items-center">
+            <img src={LoginPageImg} alt="nice svg" />
+          </div>
+        </div>
+      </div>
+    </Base>
+  );
 };
 
 export default Login;

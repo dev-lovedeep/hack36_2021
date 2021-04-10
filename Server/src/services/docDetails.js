@@ -22,7 +22,7 @@ exports.editDoctorDetails = (req, res) => {
     doctor
       .save()
       .then((savedDoctor) => {
-        return res.status(200).json({ msg: "Doctor Updated!", success: true });
+        return res.status(200).json(savedDoctor.transform());
       })
       .catch((err) => {
         return res.status(502).json({ error: err, success: false });
@@ -31,8 +31,11 @@ exports.editDoctorDetails = (req, res) => {
 };
 
 exports.getAllDoctors = (req, res) => {
+  res.setHeader("Content-Range", "doc 0-10/20");
+  res.setHeader("Access-Control-Expose-Headers", "Content-Range");
   Doctor.find({}).then((doctors) => {
-    return res.status(200).json(doctors.map((d) => d.transform()));
+    const op = doctors.map((d) => d.transform());
+    return res.status(200).json(op);
   });
 };
 
@@ -45,7 +48,7 @@ exports.getDoctorDetails = (req, res) => {
           .status(404)
           .json({ error: "Doctor not found!", success: false });
       } else {
-        return res.status(200).json({ doctor: doctor, success: true });
+        return res.status(200).json(doctor.transform());
       }
     })
     .catch((err) => {
@@ -61,7 +64,7 @@ exports.deleteDoctor = (req, res) => {
           .status(404)
           .json({ error: "Doctor not found!", success: false });
       } else {
-        return res.status(200).json({ msg: "Doctor Deleted", success: true });
+        return res.status(200).json(doctor.transform());
       }
     })
     .catch((err) => {

@@ -146,22 +146,22 @@ BASE URL :- /ambulance
 
 ## Disease Routes
 
-BASE URL :- /ambulance
+BASE URL :- /disease
 
 - **Get all details** _GET_ -> /
   > Response Body :- [{id, name}] if success {error}
 - **Get detail by id** _GET_ -> /:id
-  > Response Body :- {id, plateNo, regNo, chassisNo} if success {error}
-- **Add an ambulance** _POST_ -> /
+  > Response Body :- {id, name} if success {error}
+- **Add an disease** _POST_ -> /
 
-  > Request Body :- {plateNo, regNo, chassisNo}
+  > Request Body :- {name}
 
   > Response Body :- {the created element} {error}
 
-- **Delete an ambulance** _DELETE_ -> /:id
+- **Delete a disease** _DELETE_ -> /:id
   > Response deleted ambulnace {error}
-- **UPDATE an ambulance** _PUT_ -> /:id
+- **UPDATE a disease** _PUT_ -> /:id
 
-  > Request Body :- {plateNo, regNo, chassisNo}
+  > Request Body :- {name}
 
   > Response Body :- {updated element} {error}
