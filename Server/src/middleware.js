@@ -2,7 +2,8 @@ var User = require("./models/user");
 var expressJwt = require("express-jwt");
 var { jwt } = require("./config/keys");
 var mongoose = require("mongoose");
-const Doctor = require("./models/doctor");
+var Doctor = require("./models/doctor");
+var Driver = require("./models/driver");
 
 exports.isSignedIn = expressJwt({
   secret: jwt.jwtSecret,
@@ -61,6 +62,23 @@ exports.isDoctor = (req, res, next) => {
           .json({ error: "Doctor not registered!", success: false });
       } else {
         req.root = { ...doctor, encry_password: undefined, salt: undefined };
+        next();
+      }
+    })
+    .catch((err) => {
+      return res.status(502).json({ error: err, success: false });
+    });
+};
+
+exports.isDriver = (req, res, next) => {
+  Driver.findById(req.auth._id)
+    .then((driver) => {
+      if (!driver) {
+        return res
+          .status(404)
+          .json({ error: "Driver not registered!", success: false });
+      } else {
+        req.root = { ...driver, encry_password: undefined, salt: undefined };
         next();
       }
     })
