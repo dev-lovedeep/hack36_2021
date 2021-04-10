@@ -15,6 +15,9 @@ import {
   DiseaseShow,
 } from "./Disease";
 
+import { DoctorCreate, DoctorEdit, DoctorList, DoctorShow } from "./Doctor";
+import { DriverEdit, DriverList, DriverShow } from "./Driver";
+
 export default function AdminComp() {
   return (
     <div>
@@ -32,6 +35,19 @@ export default function AdminComp() {
           create={DiseaseCreate}
           show={DiseaseShow}
           edit={DiseaseEdit}
+        />
+        <Resource
+          name="doc"
+          list={DoctorList}
+          create={DoctorCreate}
+          show={DoctorShow}
+          edit={DoctorEdit}
+        />
+        <Resource
+          name="driver"
+          list={DriverList}
+          show={DriverShow}
+          edit={DriverEdit}
         />
       </Admin>
     </div>

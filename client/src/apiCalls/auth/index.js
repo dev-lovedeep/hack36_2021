@@ -26,3 +26,18 @@ export const registerUser = (userDetails) => {
     .then((res) => res.json())
     .catch((err) => console.log(err));
 };
+
+// login api for doctors
+export const doclogin = (userCred) => {
+  return fetch(`${API}/auth/doc/login`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    //sending user credentials in body
+    body: JSON.stringify(userCred),
+  })
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
+};

@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-import { LoginForm } from "../components/login/LoginForm";
+
 import {
-  hasAuthTokenInLocalStorage,
-  setAuthTokenInLocalStorage,
+  hasDocTokenInLocalStorage,
+  setDocTokenInLocalStorage,
 } from "../helper";
 import Base from "./Base";
-import LoginPageImg from "../img/login.svg";
-import { login } from "../apiCalls/auth";
+import DocLoginPageImg from "../img/doclogin.svg";
+import { doclogin } from "../apiCalls/auth";
+import DocLoginForm from "../components/login/DocLoginForm";
 
-const Login = () => {
+const DocLogin = (props) => {
   const [userDetails, setUserDetails] = useState({
-    adhaar: "",
+    licId: "",
     password: "",
   });
 
@@ -24,12 +25,14 @@ const Login = () => {
     setLoading(true);
 
     //calling the login api
-    login(userDetails).then((res) => {
+    doclogin(userDetails).then((res) => {
+      console.log("DOC RESPONSE", res);
       //if login ok
       if (res.success) {
         setLoading(false);
+        console.log(res);
         //set token in local storage
-        setAuthTokenInLocalStorage(res.token, () => {
+        setDocTokenInLocalStorage(res.token, () => {
           setRedirect(true);
         });
       }
@@ -40,29 +43,35 @@ const Login = () => {
       }
     });
   };
-
+  // this is when user tried to access a page from url
+  //but is not logged in so redirected to login page
+  //but this varible remember from which page user came
+  //thus help in redirecting back to it
+  const fromPage =
+    (props.location.state && props.location.state.from.pathname) || "/doc";
   return (
-    <Base title="login">
+    <Base title="login|doctor">
       <div>
         {/* for redirecting :when login success or is already logged in from token */}
 
-        {(redirect || hasAuthTokenInLocalStorage()) && (
-          <Redirect to="/userdashboard" />
+        {(redirect || hasDocTokenInLocalStorage()) && (
+          <Redirect to={fromPage} />
         )}
 
         <div className="row p-4">
           {/* left part form*/}
           <div className="col-md-5 col-sm-10 offset-md-1 p-4 bg-dark rounded ">
             <h1 className="mb-4 text-white fw-bold display-5 h1">
-              Hope,
-              <br /> you are all fine
+              Ready to
+              <br /> save the world
             </h1>
             {err && (
               <div class="alert alert-danger form-control" role="alert">
-                email or password did not matched
+                license id or password did not matched
               </div>
             )}
-            <LoginForm
+            {/* rendering actual form */}
+            <DocLoginForm
               userDetails={userDetails}
               setUserDetails={setUserDetails}
               handleSubmit={handleSubmit}
@@ -72,7 +81,7 @@ const Login = () => {
 
           {/* right part image*/}
           <div className="col-md col-sm-10 d-none d-md-flex justify-content-center align-items-center">
-            <img src={LoginPageImg} alt="nice svg" />
+            <img src={DocLoginPageImg} alt="nice svg" />
           </div>
         </div>
       </div>
@@ -80,4 +89,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default DocLogin;
