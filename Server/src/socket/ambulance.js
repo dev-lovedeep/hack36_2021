@@ -19,11 +19,8 @@ const addAmbulance = (newAmbulance, socketId) => {
   if (doesExist) {
     return { error: "Ambulance already connected!" };
   }
-  const addedAmbulance = {
-    location: {},
-    socketId: socketId,
-    details: newAmbulance,
-  };
+  const addedAmbulance = { ...newAmbulance, socketId: socketId };
+  console.log(addedAmbulance);
   connectedAmbulances.push(addedAmbulance);
   return { addedAmbulance };
 };

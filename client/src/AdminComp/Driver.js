@@ -17,6 +17,7 @@ import {
   TextField,
   TextInput,
   ShowButton,
+  PasswordInput,
 } from "react-admin";
 
 export const DriverList = (props) => {
@@ -30,6 +31,19 @@ export const DriverList = (props) => {
         <EditButton basePath="/driver" />
       </Datagrid>
     </List>
+  );
+};
+export const DriverCreate = (props) => {
+  return (
+    <Create {...props}>
+      <SimpleForm redirect="/driver">
+        <TextInput source="adhaar" validate={[required()]} />
+        <PasswordInput source="password" validate={[required()]} />
+        <TextInput source="name" validate={[required()]} />
+        <TextInput source="phone" validate={[required()]} />
+        <TextInput source="dLicId" validate={[required()]} />
+      </SimpleForm>
+    </Create>
   );
 };
 export const DriverShow = (props) => {

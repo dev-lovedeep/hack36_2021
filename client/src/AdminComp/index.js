@@ -16,7 +16,7 @@ import {
 } from "./Disease";
 
 import { DoctorCreate, DoctorEdit, DoctorList, DoctorShow } from "./Doctor";
-import { DriverEdit, DriverList, DriverShow } from "./Driver";
+import { DriverCreate, DriverEdit, DriverList, DriverShow } from "./Driver";
 
 export default function AdminComp() {
   return (
@@ -48,6 +48,7 @@ export default function AdminComp() {
           list={DriverList}
           show={DriverShow}
           edit={DriverEdit}
+          create={DriverCreate}
         />
       </Admin>
     </div>

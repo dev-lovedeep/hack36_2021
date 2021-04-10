@@ -1,19 +1,24 @@
 import React, { useRef, useEffect, useContext } from "react";
 import mapboxgl from "mapbox-gl";
-import { getCurrentLocation } from "./config/location";
+import { getCurrentLocation } from "../config/location";
+import { SocketContext } from "../Contexts/SocketContext";
+import { UserContext } from "../Contexts/UserContext";
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_API;
 
-const RouteMap = ({ lng, lat, user}) => {
+const RouteMap = () => {
     const mapContainerRef = useRef(null);
+    const [user, setUser] = useContext(UserContext);
     const [socket, setsocket] = useContext(SocketContext);
-  
+
+    console.log(user.location);
+
     useEffect(() => {
       const map = new mapboxgl.Map({
         container: mapContainerRef.current,
         style: "mapbox://styles/mapbox/streets-v11",
-        center: [lng, lat],
-        zoom: zoom,
+        center: [user.location.longitude, user.location.latitude],
+        zoom: 16,
       });
 
       map.addControl(new mapboxgl.NavigationControl(), "top-right");
@@ -23,9 +28,9 @@ const RouteMap = ({ lng, lat, user}) => {
       var el = document.createElement('div');
       el.className = 'marker';
 
-      const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
+      const marker = new mapboxgl.Marker(el).setLngLat([user.location.longitude, user.location.latitude]).addTo(map);
 
-      socket.emit("addUser", user.details, (error) => {
+      socket.emit("addUser", user, (error) => {
         if (error) {
           console.log(error);
         }
@@ -86,7 +91,7 @@ const RouteMap = ({ lng, lat, user}) => {
       }, 5000);
   
       return () => map.remove();
-    }, [lat, lng]);
+    });
   
     return (
       <div className="map-container container-fluid" ref={mapContainerRef} />

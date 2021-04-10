@@ -3,6 +3,7 @@ var Driver = require("../models/driver");
 exports.getDriverOwnDetails = (req, res) => {
   const data = req.root._doc; // extracting data after middleware store
   return res.status(200).json({
+    _id: data._id,
     name: data.name,
     adhaar: data.adhaar,
     dLicId: data.dLicId,

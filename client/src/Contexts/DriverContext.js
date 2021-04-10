@@ -7,7 +7,10 @@ export const DriverProvider = (props) => {
    * {details, location}
    * details from DB
    */
-  const [driver, setdriver] = useState({});
+  const [driver, setdriver] = useState({
+    details: {},
+    location: {},
+  });
   return (
     <DriverContext.Provider value={[driver, setdriver]}>
       {props.children}

@@ -5,7 +5,6 @@ import Login from "./pages/Login";
 import DriverDashboard from "./components/DriverDashboard";
 import DriverLogin from "./components/DriverDashboard/DriverLogin";
 import UserDashboard from "./components/UserDashboard";
-import { SocketProvider } from "./Contexts/SocketContext";
 import { DriverProvider } from "./Contexts/DriverContext";
 import { UserProvider } from "./Contexts/UserContext";
 import SignUp from "./pages/SignUp";
@@ -16,34 +15,68 @@ import DocDash from "./pages/DocDash";
 import PrivateRoute from "./helper/PrivateRoute";
 import DocLogin from "./pages/DocLogin";
 import DocRoute from "./helper/DocRoute";
+import { SocketContext, SocketProvider } from "./Contexts/SocketContext";
+import { useContext, useEffect } from "react";
+import socketioclient from "socket.io-client";
+import { API } from "./config/backend";
 
 function App() {
+  const [socket, setsocket] = useContext(SocketContext);
+  useEffect(() => {
+    if (socket === undefined) {
+      const s = socketioclient(API);
+      setsocket(s);
+    }
+  }, []);
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/doclogin" component={DocLogin} />
-        <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/admin" component={AdminComp} />
-        {/* DocRoute are only accessible by doctor account holder */}
-        <DocRoute exact path="/doc/dashboard" component={DocDash} />
-        <DocRoute exact path="/doc" component={DocHome} />
-        <SocketProvider>
-          <DriverProvider>
-            <Route exact path="/driverdashboard" component={DriverDashboard} />
-            <Route exact path="/driverlogin" component={DriverLogin} />
-          </DriverProvider>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="/admin">
+          <AdminComp />
+        </Route>
+        <Route path="/user">
           <UserProvider>
-            {/* PrivateRoute are accissble by logged in users */}
-            <PrivateRoute
-              exact
-              path="/userdashboard"
-              component={UserDashboard}
-            />
+            <Switch>
+              <Route exact path="/user/login">
+                <Login />
+              </Route>
+              <Route exact path="/user/signup">
+                <SignUp />
+              </Route>
+              <Route exact path="/user/dashboard">
+                <UserDashboard />
+              </Route>
+            </Switch>
           </UserProvider>
-        </SocketProvider>
-        <Route path="/" component={PageNotFound} />
+        </Route>
+        <Route path="/driver">
+          <DriverProvider>
+            <Switch>
+              <Route exact path="/driver/login">
+                <DriverLogin />
+              </Route>
+              <Route exact path="/driver/dashboard">
+                <DriverDashboard />
+              </Route>
+            </Switch>
+          </DriverProvider>
+        </Route>
+        <Route path="/doctor">
+          <Switch>
+            <Route exact path="/doctor/login">
+              <DocLogin />
+            </Route>
+            <Route exact path="/doctor/dashboard">
+              <DocDash />
+            </Route>
+          </Switch>
+        </Route>
+        <Route>
+          <PageNotFound />
+        </Route>
       </Switch>
     </Router>
   );

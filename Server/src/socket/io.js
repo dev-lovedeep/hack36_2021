@@ -6,16 +6,9 @@ var {
   connectedAmbulances,
 } = require("./ambulance");
 
-var {
-  addUser,
-  removeUser, 
-  updateUserLocation, 
-} = require("./users");
+var { addUser, removeUser, updateUserLocation } = require("./users");
 
-const {
-  getDuration,
-  getShortestPathAmbulance
-} = require("./apiCalls");
+const { getDuration, getShortestPathAmbulance } = require("./apiCalls");
 
 exports.socketServer = (io) => {
   console.log("Socket server has started running...");
@@ -27,8 +20,7 @@ exports.socketServer = (io) => {
 
     socket.on("addAmbulance", (newAmbulance, cb) => {
       const { error, addedAmbulance } = addAmbulance(newAmbulance, socket.id);
-
-      if(error) cb(error);
+      if (error) cb(error);
     });
 
     socket.on("sendLocation", (location, cb) => {
@@ -43,36 +35,39 @@ exports.socketServer = (io) => {
 
     /*For Users*/
 
-    socket.on("addUser", (details, cb) => {
-      const {error, user} = addUser(socket.id, details); 
-
-      if(error) cb(error);
-    })
+    socket.on("addUser", (newUser, cb) => {
+      console.log(newUser);
+      const { error, user } = addUser(socket.id, newUser);
+      if (error) cb(error);
+    });
 
     socket.on("sendUserLocation", (location, cb) => {
       updateUserLocation(socket.id, location);
-      const {latitude, longitude} = location;
+      const { latitude, longitude } = location;
       const nearByAmbulances = [];
 
       connectedAmbulances.forEach((ambulance) => {
-        const {data} = getDuration([longitude, latitude], [ambulance.location.longitude, ambulance.location.latitude])
-        if(data){
+        const { data } = getDuration(
+          [longitude, latitude],
+          [ambulance.location.longitude, ambulance.location.latitude]
+        );
+        if (data) {
           nearByAmbulances.push(data);
         }
-      })
+      });
 
-      const {error, ambulance} = getShortestPathAmbulance(nearByAmbulances);
+      const { error, ambulance } = getShortestPathAmbulance(nearByAmbulances);
 
       if (error) {
-        cb({error});
+        cb({ error });
       } else {
-        cb({ambulance});
+        cb({ ambulance });
       }
-    })
+    });
 
     socket.on("disconnect", () => {
       const removedUser = removeUser(socket.id);
-      if(removedUser !== undefined){
+      if (removedUser !== undefined) {
         console.log("Removed user!");
       }
 
