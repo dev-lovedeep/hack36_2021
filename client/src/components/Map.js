@@ -17,7 +17,7 @@ const Map = ({ lng, setLng, lat, setLat, zoom, setZoom }) => {
     map.addControl(new mapboxgl.NavigationControl(), "top-right");
 
     return () => map.remove();
-  }, []);
+  }, [lat, lng]);
 
   return (
     <div className="map-container container-fluid" ref={mapContainerRef} />
