@@ -24,16 +24,31 @@ function errors(error) {
   }
 }
 
+// export const getCurrentLocation = (cb) => {
+//   if (navigator.geolocation) {
+//     navigator.geolocation.getCurrentPosition(
+//       (position) => {
+//         return cb(position);
+//       },
+//       errors,
+//       options
+//     );
+//   } else {
+//     alert("Geolocation is not supported by this browser.");
+//   }
+// };
+
 export const getCurrentLocation = (cb) => {
   if (navigator.geolocation) {
-    return navigator.geolocation.getCurrentPosition(
-      (position) => {
-        cb(position);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        cb(pos);
       },
       errors,
       options
     );
   } else {
     alert("Geolocation is not supported by this browser.");
+    return undefined;
   }
 };

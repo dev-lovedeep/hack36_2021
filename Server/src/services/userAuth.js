@@ -70,7 +70,7 @@ exports.driverRegister = (req, res) => {
     newDriver
       .save()
       .then((savedDriver) => {
-        return res.status(201).json({ msg: "Driver Created!", success: true });
+        return res.status(201).json(savedDriver.transform());
       })
       .catch((err) => {
         return res.status(502).json({ error: err, success: false });

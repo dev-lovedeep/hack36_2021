@@ -7,19 +7,15 @@ const users = [];
  *  details: {},
  * }
  */
-const addUser = (socketId, details) => {
-  const existingUser = users.find((user) => user.details._id === details._id);
-
+const addUser = (socketId, newUser) => {
+  const existingUser = users.find(
+    (user) => user.details._id === newUser.details._id
+  );
   if (existingUser) return { error: "Detail Already Taken!!" };
 
-  const user = {
-    location: {},
-    socketId,
-    details,
-  };
-  users.push(user);
-
-  return { user };
+  const addedUser = { ...newUser, socketId: socketId };
+  users.push(addedUser);
+  return { addUser };
 };
 
 const removeUser = (socketId) => {

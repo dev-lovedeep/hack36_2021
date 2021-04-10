@@ -7,9 +7,34 @@ var {
   editDriverDetails,
   deleteDriver,
 } = require("../services/driverDetails");
-
+const { body } = require("express-validator");
+var { errHandler } = require("./errValidator");
+var { driverRegister } = require("../services/userAuth");
 var driverRouter = express.Router();
 
+driverRouter.post(
+  "/",
+  [
+    // request body checks
+    body(["adhaar", "password", "name", "phone", "dLicId"])
+      .notEmpty()
+      .withMessage("No fields should be empty!"),
+    body("name").isLength({ min: 3 }).withMessage("Name too short!"),
+    body("password")
+      .isLength({
+        min: 8,
+      })
+      .withMessage("Password should be min 8 characters!!")
+      .matches(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$.!%*#?&])[A-Za-z\d@$.!%*#?&]{8,20}$/
+      )
+      .withMessage("Password must contain alphabets, numbers & symbols!!"),
+  ],
+  errHandler,
+  isSignedIn,
+  isAdmin,
+  driverRegister
+);
 // getting own details driver
 driverRouter.get("/me", isSignedIn, isDriver, getDriverOwnDetails);
 // editting own details driver

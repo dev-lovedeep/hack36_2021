@@ -47,7 +47,7 @@ const Login = () => {
         {/* for redirecting :when login success or is already logged in from token */}
 
         {(redirect || hasAuthTokenInLocalStorage()) && (
-          <Redirect to="/userdashboard" />
+          <Redirect to="/user/dashboard" />
         )}
 
         <div className="row p-4">
