@@ -4,6 +4,8 @@ import { SocketContext } from "../../Contexts/SocketContext";
 import { UserContext } from "../../Contexts/UserContext";
 import socketioclient from "socket.io-client/dist/socket.io";
 import { useHistory } from "react-router";
+import Base from "../../pages/Base";
+import DashComp from "./DashComp";
 
 export default function UserDashboard() {
   const [user, setuser] = useContext(UserContext);
@@ -26,18 +28,18 @@ export default function UserDashboard() {
       },
     })
       .then((res) => {
-        // if (res.status !== 200) {
-        //   localStorage.removeItem("jwt");
-        //   history.push("/login");
-        // }
+        if (res.status !== 200) {
+          localStorage.removeItem("jwt");
+          history.push("/login");
+        }
         return res.json();
       })
       .then((data) => {
-        // if (data.error) {
-        //   localStorage.removeItem("jwt");
-        //   history.push("/login");
-        // }
-        console.log(data);
+        if (data.error) {
+          localStorage.removeItem("jwt");
+          history.push("/login");
+        }
+        setuser({ details: data });
       });
   }, []);
   // useEffect(() => {
@@ -47,8 +49,8 @@ export default function UserDashboard() {
   //     });
   // }, [ambulances]);
   return (
-    <div>
-      <h1>{"ishan"}</h1>
-    </div>
+    <Base title="User | Dashboard">
+      {user.details ? <DashComp user={user.details} /> : <div>Loading...</div>}
+    </Base>
   );
 }

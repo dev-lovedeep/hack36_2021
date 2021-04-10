@@ -14,3 +14,21 @@ export const hasAuthTokenInLocalStorage = () => {
   }
   return false;
 };
+
+//set auth token for doctor account in local storage
+export const setDocTokenInLocalStorage = (token, cb) => {
+  if (typeof window !== undefined) {
+    window.localStorage.setItem("docjwt", token);
+    cb();
+  }
+};
+
+//check doctor auth token in local storage
+export const hasDocTokenInLocalStorage = () => {
+  if (typeof window !== undefined) {
+    if (window.localStorage.getItem("docjwt"))
+      return localStorage.getItem("docjwt");
+    else return false;
+  }
+  return false;
+};
