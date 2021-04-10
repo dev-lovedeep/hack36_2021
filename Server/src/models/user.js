@@ -35,9 +35,11 @@ var User = new Schema(
         pid: Number,
         date: Date,
         docId: String,
+        medId: String,
         desc: String,
       },
     ],
+    diseases: [{ name: String, id: String, severity: Number }],
     salt: {
       type: String,
     },

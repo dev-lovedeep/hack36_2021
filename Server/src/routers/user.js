@@ -8,8 +8,12 @@ var {
   getMedicalHistory,
   addMedicalRecord,
   removeMedicalRecord,
+  addDisease,
+  removeDisease,
 } = require("../services/userDetails");
 var { historyStore } = require("../config/multerStore");
+var { body } = require("express-validator");
+const { errHandler } = require("./errValidator");
 
 var userRouter = express.Router();
 
@@ -33,6 +37,27 @@ userRouter.delete(
   isSignedIn,
   isDoctor,
   removeMedicalRecord
+);
+// adding disease
+userRouter.post(
+  "/disease/:userId",
+  [
+    body(["diseaseId", "severity"])
+      .notEmpty()
+      .withMessage("No field should be empty!"),
+  ],
+  errHandler,
+  isSignedIn,
+  isDoctor,
+  addDisease
+);
+// removing disease
+userRouter.put(
+  "/disease/:userId",
+  [body("diseaseId").notEmpty().withMessage("No field should be empty!")],
+  isSignedIn,
+  isDoctor,
+  removeDisease
 );
 
 module.exports = userRouter;

@@ -72,6 +72,13 @@ BASE URL :- /user
 
   > Response Body :- {msg, success = true} if successful (error, success = false) if failed
 
+- **Add Disease :-** _POST_ -> /disease/:userId
+  > Request Body :- {diseaseId, severity = 1, 2, 3}
+  > Response Body :- {msg, success = true} if successful (error, success = false) if failed
+- **Remove Disease :-** _PUT_ -> /disease/:userId
+  > Request Body :- {diseaseId}
+  > Response Body :- {msg, success = true} if successful (error, success = false) if failed
+
 ---
 
 ## Doctor Routes
@@ -91,6 +98,9 @@ BASE URL :- /doc
   > Request Body :- {name, phone, licId}
   > Response Body :- {msg, success = true} if successful (error, success = false) if failed
 - **Delete Doctor :-** _DELETE_ /:doctorId [FOR ADMINs ONLY]
+  > Response Body :- {msg, success = true} if successful (error, success = false) if failed
+- **Add Patients :-** _PUT_ -> /patients
+  > Request Body :- {patient = {name, id}}
   > Response Body :- {msg, success = true} if successful (error, success = false) if failed
 
 ---
@@ -146,10 +156,12 @@ BASE URL :- /ambulance
 
 ## Disease Routes
 
-BASE URL :- /ambulance
+BASE URL :- /disease
 
 - **Get all details** _GET_ -> /
   > Response Body :- [{id, name}] if success {error}
+- **Search a disease :-** _POST_ -> /s?search=
+  > Response Body :- [{disease}], success = true, if successful
 - **Get detail by id** _GET_ -> /:id
   > Response Body :- {id, plateNo, regNo, chassisNo} if success {error}
 - **Add an ambulance** _POST_ -> /

@@ -68,3 +68,21 @@ exports.deleteDoctor = (req, res) => {
       return res.status(502).json({ error: err, success: false });
     });
 };
+
+exports.addPatients = (req, res) => {
+  if (req.body.patient === undefined) {
+    return res.status(400).json({ error: "Field is empty!", success: false });
+  } else {
+    Doctor.findById(req.root._doc._id).then((doctor) => {
+      doctor.prevPatients.push(req.body.patient);
+      doctor
+        .save()
+        .then((savedDoctor) => {
+          return res.status(200).json({ msg: "Patient added!", success: true });
+        })
+        .catch((err) => {
+          return res.status(502).json({ error: err, success: false });
+        });
+    });
+  }
+};

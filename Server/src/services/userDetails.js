@@ -1,4 +1,5 @@
 var User = require("../models/user");
+var Disease = require("../models/disease");
 
 exports.getOwnDetails = (req, res) => {
   // extracting data saved by isVerified middleware
@@ -64,7 +65,8 @@ exports.addMedicalRecord = (req, res) => {
         user.medHist.push({
           pid: pid,
           date: new Date(currDate),
-          docId: medicalPath,
+          medId: medicalPath,
+          docId: req.root._doc._id.toString(),
           desc: req.body.desc,
         });
 
@@ -122,4 +124,67 @@ exports.removeMedicalRecord = (req, res) => {
     .catch((err) => {
       return res.status(400).json({ err: err, success: false });
     });
+};
+
+exports.addDisease = (req, res) => {
+  if (req.body.severity > 3 || req.body.severity < 1) {
+    // check for valid severity index 1-3
+    return res.status(400).json({ error: "Invalid severity", success: false });
+  } else {
+    User.findById(req.params.userId).then((user) => {
+      if (!user) {
+        return res
+          .status(404)
+          .json({ error: "User not found!", success: false });
+      } else {
+        Disease.findById(req.body.diseaseId).then((disease) => {
+          user.diseases.push({
+            name: disease.name,
+            id: disease._id,
+            severity: req.body.severity,
+          });
+          user
+            .save()
+            .then((savedUser) => {
+              return res
+                .status(200)
+                .json({ msg: "Disease added!", success: true });
+            })
+            .catch((err) => {
+              return res.status(400).json({ err: err, success: false });
+            });
+        });
+      }
+    });
+  }
+};
+
+exports.removeDisease = (req, res) => {
+  User.findById(req.params.userId).then((user) => {
+    if (!user) {
+      return res.status(404).json({ error: "User not found!", success: false });
+    } else {
+      var diseaseRec = user.diseases.find(
+        (disease) => disease.id === req.body.diseaseId
+      );
+      if (diseaseRec === undefined) {
+        return res
+          .status(400)
+          .json({ error: "Disease cannot be found", success: false });
+      } else {
+        var index = user.diseases.indexOf(diseaseRec);
+        user.diseases.splice(index, 1);
+        user
+          .save()
+          .then((updatedUser) => {
+            return res
+              .status(200)
+              .json({ msg: "Disease removed!", success: true });
+          })
+          .catch((err) => {
+            return res.status(400).json({ err: err, success: false });
+          });
+      }
+    }
+  });
 };

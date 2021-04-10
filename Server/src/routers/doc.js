@@ -6,6 +6,7 @@ var {
   getAllDoctors,
   editDoctorDetails,
   deleteDoctor,
+  addPatients,
 } = require("../services/docDetails");
 
 var docRouter = express.Router();
@@ -22,5 +23,7 @@ docRouter.get("/:doctorId", isSignedIn, isAdmin, getDoctorDetails);
 docRouter.put("/:doctorId", isSignedIn, isAdmin, editDoctorDetails);
 // deleting user by admin
 docRouter.delete("/:doctorId", isSignedIn, isAdmin, deleteDoctor);
+// adding patients by doctor
+docRouter.put("/patients", isSignedIn, isDoctor, addPatients);
 
 module.exports = docRouter;
