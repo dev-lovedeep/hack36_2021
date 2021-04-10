@@ -6,16 +6,18 @@ import { UserContext } from "../Contexts/UserContext";
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_API;
 
-const RouteMap = ({ lng = 80.9462, lat = 26.8467}) => {
+const RouteMap = () => {
     const mapContainerRef = useRef(null);
     const [user, setUser] = useContext(UserContext);
     const [socket, setsocket] = useContext(SocketContext);
+
+    console.log(user.location);
 
     useEffect(() => {
       const map = new mapboxgl.Map({
         container: mapContainerRef.current,
         style: "mapbox://styles/mapbox/streets-v11",
-        center: [lng, lat],
+        center: [user.location.longitude, user.location.latitude],
         zoom: 16,
       });
 
@@ -26,7 +28,7 @@ const RouteMap = ({ lng = 80.9462, lat = 26.8467}) => {
       var el = document.createElement('div');
       el.className = 'marker';
 
-      const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
+      const marker = new mapboxgl.Marker(el).setLngLat([user.location.longitude, user.location.latitude]).addTo(map);
 
       socket.emit("addUser", user, (error) => {
         if (error) {
@@ -89,7 +91,7 @@ const RouteMap = ({ lng = 80.9462, lat = 26.8467}) => {
       }, 5000);
   
       return () => map.remove();
-    }, [lat, lng]);
+    });
   
     return (
       <div className="map-container container-fluid" ref={mapContainerRef} />

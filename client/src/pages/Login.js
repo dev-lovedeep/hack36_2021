@@ -9,7 +9,7 @@ import Base from "./Base";
 import LoginPageImg from "../img/login.svg";
 import { login } from "../apiCalls/auth";
 
-const Login = (props) => {
+const Login = () => {
   const [userDetails, setUserDetails] = useState({
     adhaar: "",
     password: "",
@@ -40,13 +40,7 @@ const Login = (props) => {
       }
     });
   };
-  // this is when user tried to access a page from url
-  //but is not logged in so redirected to login page
-  //but this varible remember from which page user came
-  //thus help in redirecting back to it
-  const fromPage =
-    (props.location.state && props.location.state.from.pathname) ||
-    "/userdashboard";
+
   return (
     <Base title="login">
       <div>
