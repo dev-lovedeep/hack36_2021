@@ -3,6 +3,7 @@ import bgImg from "../img/img1.jpg";
 import Overlay from "../components/general/Overlay";
 import Base from "./Base";
 import { Link, Redirect } from "react-router-dom";
+import { addPatient } from "../apiCalls/auth";
 
 const DocHome = () => {
   const [pid, setPid] = useState(null);
@@ -11,7 +12,7 @@ const DocHome = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO:
+    addPatient();
     setSuccess(true);
     //api to set this patient into doc's history
     //and redirect to doc dashboard page

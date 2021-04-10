@@ -1,6 +1,11 @@
 import React from "react";
 
-export default function DiagnosisCard({ disease, date }) {
+export default function DiagnosisCard({ disease, severity }) {
+  const getSeverity = () => {
+    if (severity < 5) return "px-3 py-3 bg-light";
+    else if (severity == 5) return "px-3 py-3 bg-warning";
+    else return "px-3 py-3 bg-danger";
+  };
   return (
     <div
       style={{
@@ -9,8 +14,7 @@ export default function DiagnosisCard({ disease, date }) {
       }}
       className="m-2"
     >
-      <h5 className="px-3 pt-3">{disease}</h5>
-      <p className="px-4">{date}</p>
+      <h5 className={getSeverity()}>{disease}</h5>
     </div>
   );
 }
