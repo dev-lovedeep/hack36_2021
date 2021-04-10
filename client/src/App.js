@@ -9,12 +9,15 @@ import UserDashboard from "./components/UserDashboard";
 import { SocketProvider } from "./Contexts/SocketContext";
 import { DriverProvider } from "./Contexts/DriverContext";
 import { UserProvider } from "./Contexts/UserContext";
+import AdminComp from "./AdminComp";
+
 function App() {
   return (
     <Router>
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/admin" component={AdminComp} />
         <SocketProvider>
           <DriverProvider>
             <Route exact path="/driverdashboard" component={DriverDashboard} />
