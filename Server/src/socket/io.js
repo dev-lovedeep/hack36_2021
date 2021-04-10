@@ -63,16 +63,10 @@ exports.socketServer = (io) => {
 
       const {error, ambulance} = getShortestPathAmbulance(nearByAmbulances);
 
-      //Review it
-
       if (error) {
-        socket.emit("errorMessage", { error: error, success: false });
+        cb({error});
       } else {
-        socket.emit("successMessage", {
-          msg: "Shortest duration ambulance",
-          ambulance,
-          success: true,
-        });
+        cb({ambulance});
       }
     })
 
