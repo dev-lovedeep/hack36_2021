@@ -9,12 +9,14 @@ import UserDashboard from "./components/UserDashboard";
 import { SocketProvider } from "./Contexts/SocketContext";
 import { DriverProvider } from "./Contexts/DriverContext";
 import { UserProvider } from "./Contexts/UserContext";
+import SignUp from "./pages/SignUp";
 function App() {
   return (
     <Router>
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={SignUp} />
         <SocketProvider>
           <DriverProvider>
             <Route exact path="/driverdashboard" component={DriverDashboard} />
