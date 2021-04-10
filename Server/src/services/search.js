@@ -28,10 +28,13 @@ const searchFromAdhaar = (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found!", success: false });
     } else {
+      const {_doc}=user
       return res.status(200).json({
-        ...user,
-        salt: undefined,
-        encry_password: undefined,
+        patient:{
+          id:_doc._id,
+          name:_doc.name,
+        },
+        success:true
       });
     }
   });

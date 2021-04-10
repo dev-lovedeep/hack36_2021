@@ -3,10 +3,13 @@ var Doctor = require("../models/doctor");
 exports.getDoctorOwnDetails = (req, res) => {
   const data = req.root._doc; // extracting data after middleware store
   return res.status(200).json({
-    name: data.name,
-    licId: data.licId,
-    phone: data.phone,
-    prevPatients: prevPatients,
+    details:{
+      name: data.name,
+      licId: data.licId,
+      phone: data.phone,
+      prevPatients: data.prevPatients,
+    },
+    success:true
   });
 };
 

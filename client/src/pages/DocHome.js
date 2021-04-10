@@ -3,21 +3,38 @@ import bgImg from "../img/img1.jpg";
 import Overlay from "../components/general/Overlay";
 import Base from "./Base";
 import { Link, Redirect } from "react-router-dom";
-import { addPatient } from "../apiCalls/auth";
+import { addPatient, searchUserByAdhaar } from "../apiCalls/auth";
 
 const DocHome = () => {
-  const [pid, setPid] = useState(null);
+  const [adhaar, setAdhaar] = useState(null);
+  const [loading, setLoading] = useState(false);
+  //this will be set by api
+  const [patient, setPatient] = useState(null);
   const [err, setErr] = useState(false);
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addPatient();
-    setSuccess(true);
-    //api to set this patient into doc's history
-    //and redirect to doc dashboard page
-    //if show error for if patent does not exist
-    //
+    setLoading(true);
+    //got the patient object
+    searchUserByAdhaar(adhaar)
+      .then((res) => {
+        if (res.success) {
+          //add this patient to doctors previous patient list
+          //and redirect to doc dashboard page
+          addPatient(res.patient)
+            .then((res) => {
+              console.log("ADD PATIENT", res);
+              if (res.success) setSuccess(true);
+              else setErr(res.error);
+            })
+            .catch((err) => console.log(err));
+        }
+        // setPatient(res.patient);
+        else setErr(res.error);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -66,19 +83,19 @@ const DocHome = () => {
                 pattern="^[0-9]{12}$"
                 placeholder="enter patient's 12 digit aadhar id"
                 aria-label="Search"
-                value={pid}
+                value={adhaar}
                 minLength="12"
                 maxLength="12"
-                onChange={(e) => setPid(e.target.value)}
+                onChange={(e) => setAdhaar(e.target.value)}
                 style={{ height: "60px" }}
                 required
               />
               {/* submit btn */}
               <button className="btn btn-success" type="submit">
-                view
+                {loading ? "checking..." : "view"}
               </button>
             </form>
-            <Link to="/doc/dashboard" className="btn btn-dark mt-4 offset-4">
+            <Link to="/doctor/dashboard" className="btn btn-dark mt-4 offset-4">
               go to dashboard
             </Link>
           </div>

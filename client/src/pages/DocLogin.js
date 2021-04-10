@@ -48,7 +48,11 @@ const DocLogin = (props) => {
   //but this varible remember from which page user came
   //thus help in redirecting back to it
   const fromPage =
-    (props.location.state && props.location.state.from.pathname) || "/doc";
+    (props &&
+      props.location &&
+      props.location.state &&
+      props.location.state.from.pathname) ||
+    "/doctor";
   return (
     <Base title="login|doctor">
       <div>

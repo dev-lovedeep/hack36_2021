@@ -5,7 +5,7 @@ const { isSignedIn, isVerified, isDoctor } = require("../middleware");
 var {
   getOwnDetails,
   editOwnDetails,
-  getMedicalHistory,
+  getUserDetails,
   addMedicalRecord,
   removeMedicalRecord,
   addDisease,
@@ -22,8 +22,9 @@ var userRouter = express.Router();
 userRouter.get("/me", isSignedIn, isVerified, getOwnDetails);
 // edit own details
 userRouter.put("/me", isSignedIn, isVerified, editOwnDetails);
-// get medical history of a patient
-userRouter.get("/medical/:userId", isSignedIn, isDoctor, getMedicalHistory);
+// get detials of user by id
+userRouter.get("/:userId", isSignedIn, isDoctor, getUserDetails);
+
 // add medical history to patient's profile
 userRouter.put(
   "/medical/:userId",

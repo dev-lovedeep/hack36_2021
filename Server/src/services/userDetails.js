@@ -33,13 +33,13 @@ exports.editOwnDetails = (req, res) => {
       return res.status(502).json({ error: err, success: false });
     });
 };
-// getting medical history by a doctor
-exports.getMedicalHistory = (req, res) => {
+// getting user details by a doctor
+exports.getUserDetails = (req, res) => {
   User.findById(req.params.userId).then((user) => {
     if (!user) {
       return res.status(404).json({ error: "User not found!", success: false });
     } else {
-      return res.status(200).json({ medHist: user.medHist, success: true });
+      return res.status(200).json({ user: user, success: true });
     }
   });
 };
