@@ -9,7 +9,9 @@ import UserDashboard from "./components/UserDashboard";
 import { SocketProvider } from "./Contexts/SocketContext";
 import { DriverProvider } from "./Contexts/DriverContext";
 import { UserProvider } from "./Contexts/UserContext";
+import SignUp from "./pages/SignUp";
 import AdminComp from "./AdminComp";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   return (
@@ -17,7 +19,9 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={SignUp} />
         <Route exact path="/admin" component={AdminComp} />
+        <Route path="/" component={PageNotFound} />
         <SocketProvider>
           <DriverProvider>
             <Route exact path="/driverdashboard" component={DriverDashboard} />
