@@ -24,20 +24,29 @@ async function serachDisease(search) {
 }
 
 const searchFromAdhaar = (req, res) => {
-  User.findOne({ adhaar: req.query.search }).then((user) => {
-    if (!user) {
-      return res.status(404).json({ error: "User not found!", success: false });
-    } else {
-      const {_doc}=user
-      return res.status(200).json({
-        patient:{
-          id:_doc._id,
-          name:_doc.name,
-        },
-        success:true
-      });
-    }
-  });
+  console.log(req.query.search);
+  User.findOne({ adhaar: req.query.search })
+    .then((user) => {
+      if (!user) {
+        return res
+          .status(404)
+          .json({ error: "User not found!", success: false });
+      } else {
+        console.log(user);
+        const { _doc } = user;
+        console.log(_doc);
+        return res.status(200).json({
+          patient: {
+            id: _doc._id,
+            name: _doc.name,
+          },
+          success: true,
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 module.exports = { serachDisease, searchFromAdhaar };

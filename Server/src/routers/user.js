@@ -22,6 +22,7 @@ var userRouter = express.Router();
 userRouter.get("/me", isSignedIn, isVerified, getOwnDetails);
 // edit own details
 userRouter.put("/me", isSignedIn, isVerified, editOwnDetails);
+userRouter.get("/s", isSignedIn, isDoctor, searchFromAdhaar);
 // get detials of user by id
 userRouter.get("/:userId", isSignedIn, isDoctor, getUserDetails);
 
@@ -61,7 +62,5 @@ userRouter.put(
   isDoctor,
   removeDisease
 );
-
-userRouter.get("/s", isSignedIn, isDoctor, searchFromAdhaar);
 
 module.exports = userRouter;
