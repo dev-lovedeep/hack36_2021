@@ -14,6 +14,8 @@ import PageNotFound from "./pages/PageNotFound";
 import DocHome from "./pages/DocHome";
 import DocDash from "./pages/DocDash";
 import PrivateRoute from "./helper/PrivateRoute";
+import DocLogin from "./pages/DocLogin";
+import DocRoute from "./helper/DocRoute";
 
 function App() {
   return (
@@ -21,17 +23,24 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/doclogin" component={DocLogin} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/admin" component={AdminComp} />
-        <Route exact path="/doc" component={DocHome} />
-        <Route exact path="/doc/dasbhoard" component={DocDash} />
+        {/* DocRoute are only accessible by doctor account holder */}
+        <DocRoute exact path="/doc/dashboard" component={DocDash} />
+        <DocRoute exact path="/doc" component={DocHome} />
         <SocketProvider>
           <DriverProvider>
             <Route exact path="/driverdashboard" component={DriverDashboard} />
             <Route exact path="/driverlogin" component={DriverLogin} />
           </DriverProvider>
           <UserProvider>
-            <Route exact path="/userdashboard" component={UserDashboard} />
+            {/* PrivateRoute are accissble by logged in users */}
+            <PrivateRoute
+              exact
+              path="/userdashboard"
+              component={UserDashboard}
+            />
           </UserProvider>
         </SocketProvider>
         <Route path="/" component={PageNotFound} />

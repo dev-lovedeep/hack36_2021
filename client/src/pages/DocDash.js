@@ -1,10 +1,11 @@
 import React from "react";
+import Base from "./Base";
 
 const DocDash = () => {
   return (
-    <div>
+    <Base>
       <h1 className="h1">doctor dashboard</h1>
-    </div>
+    </Base>
   );
 };
 

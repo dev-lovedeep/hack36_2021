@@ -25,18 +25,10 @@ exports.socketServer = (io) => {
   io.on("connection", (socket) => {
     console.log(`New Socket Connected : ${socket.id}`);
 
-    socket.on("addAmbulance", (newAmbulance) => {
+    socket.on("addAmbulance", (newAmbulance, cb) => {
       const { error, addedAmbulance } = addAmbulance(newAmbulance, socket.id);
 
-      if (error) {
-        socket.emit("errorMessage", { error: error, success: false });
-      } else {
-        socket.emit("successMessage", {
-          msg: "Ambulance added!!",
-          ambulance: addedAmbulance,
-          success: true,
-        });
-      }
+      if(error) cb(error);
     });
 
     socket.on("sendLocation", (location, cb) => {
@@ -51,18 +43,10 @@ exports.socketServer = (io) => {
 
     /*For Users*/
 
-    socket.on("addUser", (details) => {
+    socket.on("addUser", (details, cb) => {
       const {error, user} = addUser(socket.id, details); 
 
-      if (error) {
-        socket.emit("errorMessage", { error: error, success: false });
-      } else {
-        socket.emit("successMessage", {
-          msg: "User added!!",
-          ambulance: user,
-          success: true,
-        });
-      }
+      if(error) cb(error);
     })
 
     socket.on("sendUserLocation", (location, cb) => {
@@ -79,16 +63,10 @@ exports.socketServer = (io) => {
 
       const {error, ambulance} = getShortestPathAmbulance(nearByAmbulances);
 
-      //Review it
-
       if (error) {
-        socket.emit("errorMessage", { error: error, success: false });
+        cb({error});
       } else {
-        socket.emit("successMessage", {
-          msg: "Shortest duration ambulance",
-          ambulance,
-          success: true,
-        });
+        cb({ambulance});
       }
     })
 
