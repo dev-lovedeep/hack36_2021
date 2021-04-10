@@ -1,4 +1,5 @@
 var Disease = require("../models/disease");
+var User = require("../models/user");
 
 async function serachDisease(search) {
   let pattern = "";
@@ -22,4 +23,18 @@ async function serachDisease(search) {
   return result;
 }
 
-module.exports = { serachDisease };
+const searchFromAdhaar = (req, res) => {
+  User.findOne({ adhaar: req.query.search }).then((user) => {
+    if (!user) {
+      return res.status(404).json({ error: "User not found!", success: false });
+    } else {
+      return res.status(200).json({
+        ...user,
+        salt: undefined,
+        encry_password: undefined,
+      });
+    }
+  });
+};
+
+module.exports = { serachDisease, searchFromAdhaar };

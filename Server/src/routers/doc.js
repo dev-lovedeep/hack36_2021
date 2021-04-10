@@ -1,5 +1,5 @@
 var express = require("express");
-var { isSignedIn, isAdmin, isDoctor, isVerified } = require("../middleware");
+var { isSignedIn, isAdmin, isDoctor } = require("../middleware");
 var { errHandler } = require("./errValidator");
 
 const { doctorRegister } = require("../services/adminAuth");
@@ -41,6 +41,8 @@ docRouter.post(
 docRouter.get("/me", isSignedIn, isDoctor, getDoctorOwnDetails);
 // editting own details doctor
 docRouter.put("/me", isSignedIn, isDoctor, editDoctorDetails);
+// adding patients by doctor
+docRouter.put("/patients", isSignedIn, isDoctor, addPatients);
 // get all doctors
 docRouter.get("/", isSignedIn, isAdmin, getAllDoctors);
 // getting doctors details
@@ -49,7 +51,5 @@ docRouter.get("/:doctorId", isSignedIn, isAdmin, getDoctorDetails);
 docRouter.put("/:doctorId", isSignedIn, isAdmin, editDoctorDetails);
 // deleting user by admin
 docRouter.delete("/:doctorId", isSignedIn, isAdmin, deleteDoctor);
-// adding patients by doctor
-docRouter.put("/patients", isSignedIn, isDoctor, addPatients);
 
 module.exports = docRouter;

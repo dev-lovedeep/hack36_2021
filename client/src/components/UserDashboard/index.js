@@ -13,6 +13,7 @@ export default function UserDashboard() {
   const [socket, setsocket] = useContext(SocketContext);
   const [ambulances, setambulances] = useState([]);
   const history = useHistory();
+
   useEffect(() => {
     const token = localStorage.getItem("jwt").toString();
     console.log("Bearer" + token);

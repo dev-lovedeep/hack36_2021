@@ -11,6 +11,7 @@ var {
   addDisease,
   removeDisease,
 } = require("../services/userDetails");
+var { searchFromAdhaar } = require("../services/search");
 var { historyStore } = require("../config/multerStore");
 var { body } = require("express-validator");
 const { errHandler } = require("./errValidator");
@@ -59,5 +60,7 @@ userRouter.put(
   isDoctor,
   removeDisease
 );
+
+userRouter.get("/s", isSignedIn, isDoctor, searchFromAdhaar);
 
 module.exports = userRouter;
