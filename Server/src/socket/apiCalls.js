@@ -9,17 +9,19 @@ const getDuration = (start = [-84.518641,39.134270], end = [-84.512023,39.102779
 
     const url = `https://api.mapbox.com/directions/v5/mapbox/driving-traffic/${start[0]},${start[1]};${end[0]},${end[1]}?geometries=geojson&access_token=${mapboxgl.accessToken}`;
 
-    axios.get(url).then((res) => {
-        const data = res.data.routes[0];
-        console.log(data.duration,data.geometry.coordinates)
+    // axios.get(url).then((res) => {
+    //     const data = res.data.routes[0];
+    //     console.log(data.duration,data.geometry.coordinates)
 
-        return {data: {
-            route: data.geometry.coordinates,
-            duration: data.duration
-        }}
-    }).catch((e) => {
-        return {error: e};
-    })
+    //     return {data: {
+    //         route: data.geometry.coordinates,
+    //         duration: data.duration
+    //     }}
+    // }).catch((e) => {
+    //     return {error: e};
+    // })
+
+    return (axios.get(url));
 }
 
 const getShortestPathAmbulance = (ambulances) => {

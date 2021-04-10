@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import mapboxgl from "mapbox-gl";
 import icon from "../img/ambulance.png";
 
@@ -6,7 +6,7 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_API;
 
 const Map = ({ lng, setLng, lat, setLat, zoom, setZoom, socket }) => {
   const mapContainerRef = useRef(null);
-
+  
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
@@ -31,6 +31,8 @@ const Map = ({ lng, setLng, lat, setLat, zoom, setZoom, socket }) => {
         type: "FeatureCollection",
         features: [],
       };
+
+      console.log("ambulances: ",ambulances);
 
       res.ambulances.forEach((ambulance) => {
         const coords = [

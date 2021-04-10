@@ -26,7 +26,7 @@ const removeUser = (socketId) => {
 const updateUserLocation = (socketId, location) => {
   const index = users.findIndex((user) => user.socketId === socketId);
   if (index !== -1) {
-    user[index].location = location;
+    users[index].location = location;
   }
 };
 

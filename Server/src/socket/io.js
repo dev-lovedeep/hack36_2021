@@ -47,22 +47,49 @@ exports.socketServer = (io) => {
       const nearByAmbulances = [];
 
       connectedAmbulances.forEach((ambulance) => {
-        const { data } = getDuration(
+        const res = getDuration(
           [longitude, latitude],
           [ambulance.location.longitude, ambulance.location.latitude]
         );
-        if (data) {
-          nearByAmbulances.push(data);
-        }
+        
+        nearByAmbulances.push(res);
       });
+
+      console.log(nearByAmbulances);
+
+      Promise.all(nearByAmbulances).then((all) => {
+        const ambulances = [];
+        all.forEach((res) => {
+          const data = res.data.routes[0];
+          // console.log(data.duration,data.geometry.coordinates)
+          // console.log(res);
+          ambulances.push({
+            location: res.data.waypoints[1].location,
+            route: data.geometry.coordinates,
+            duration: data.duration
+          })
+        })
+
+        const { error, ambulance } = getShortestPathAmbulance(ambulances);
+
+        if(error) cb({error});
+        else{
+          cb({ambulance})
+        }
+
+        // console.log(ambulances);
+      }).catch((e) => {
+        console.log(e);
+        cb({error: e});
+      })
 
       const { error, ambulance } = getShortestPathAmbulance(nearByAmbulances);
 
-      if (error) {
-        cb({ error });
-      } else {
-        cb({ ambulance });
-      }
+      // if (error) {
+      //   cb({ error });
+      // } else {
+      //   cb({ ambulance });
+      // }
     });
 
     socket.on("disconnect", () => {
