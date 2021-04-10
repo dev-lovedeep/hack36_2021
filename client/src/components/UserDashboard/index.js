@@ -12,6 +12,7 @@ export default function UserDashboard() {
   // const [socket, setsocket] = useContext(SocketContext);
   const [ambulances, setambulances] = useState([]);
   const history = useHistory();
+
   useEffect(() => {
     // const skt = socketioclient(API);
     // setsocket(skt);
@@ -39,6 +40,7 @@ export default function UserDashboard() {
           localStorage.removeItem("jwt");
           history.push("/login");
         }
+
         setuser({ details: data });
       });
   }, []);

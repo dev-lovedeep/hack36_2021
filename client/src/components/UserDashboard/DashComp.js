@@ -35,11 +35,8 @@ export default function DashComp({ user }) {
                   <h4>Latest Diagnoses</h4>
                   <hr />
                   <div className="d-flex flex-column flex-md-row">
-                    {user.diseases ? (
-                      <p className="text-white text-center mx-auto">
-                        nothing to worry
-                      </p>
-                    ) : (
+                    {console.log(user)}
+                    {user.diseases !== undefined && user.diseases.length ? (
                       user.diseases.map((dis) => {
                         return (
                           <DiagnosisCard
@@ -48,6 +45,10 @@ export default function DashComp({ user }) {
                           />
                         );
                       })
+                    ) : (
+                      <p className="text-white text-center mx-auto">
+                        nothing to worry
+                      </p>
                     )}
                   </div>
                 </div>
@@ -114,23 +115,14 @@ export default function DashComp({ user }) {
                 <div className="container py-5 bg-info ">
                   {/* <!-- For demo purpose --> */}
                   <div className="row text-center  mb-5">
-                    {user.medHist ? (
-                      // if no medical history
-                      <div className="text-white text-center mx-auto w-100">
-                        <p className="display-4 text-capitalize">
-                          great health
-                        </p>
-                        <p>
-                          whenver a doctor upload a prescription it will apper
-                          here
-                        </p>
-                      </div>
-                    ) : (
+                    {console.log(user.medHist)}
+                    {user.medHist !== undefined && user.medHist.length ? (
                       //else show medical history
                       //Timeline start
                       <div className="row">
                         <div className="col-lg-7 mx-auto">
                           <ul className="timeline">
+                            {/* looping over all the medical history */}
                             {user.medHist.map((hist) => {
                               return (
                                 <li className="timeline-item bg-white rounded ml-3 p-4 shadow">
@@ -147,67 +139,21 @@ export default function DashComp({ user }) {
                                 </li>
                               );
                             })}
-                            <li className="timeline-item bg-white rounded ml-3 p-4 shadow">
-                              <div className="timeline-arrow"></div>
-                              <h2 className="h5 mb-0">Title of section 2</h2>
-                              <span className="small text-secondary">
-                                <i className="fa fa-clock-o mr-1"></i>5 April,
-                                2019
-                              </span>
-                              <p className="text-small mt-2 font-weight-light">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Quisque scelerisque diam non
-                                nisi semper.
-                              </p>
-                              <p className="text-small mt-2 font-weight-light">
-                                Libero expedita explicabo eius fugiat quia
-                                aspernatur autem laudantium error architecto
-                                recusandae natus sapiente sit nam eaque,
-                                consectetur porro molestiae ipsam! Deleniti.
-                              </p>
-                            </li>
-                            <li className="timeline-item bg-white rounded ml-3 p-4 shadow">
-                              <div className="timeline-arrow"></div>
-                              <h2 className="h5 mb-0">Title of section 3</h2>
-                              <span className="small text-secondary">
-                                <i className="fa fa-clock-o mr-1"></i>18 August,
-                                2019
-                              </span>
-                              <p className="text-small mt-2 font-weight-light">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Quisque scelerisque diam non
-                                nisi semper, et elementum lorem ornare. Maecenas
-                                placerat facilisis mollis. Duis sagittis ligula
-                                in sodales vehicula....
-                              </p>
-                            </li>
-                            <li className="timeline-item bg-white rounded ml-3 p-4 shadow">
-                              <div className="timeline-arrow"></div>
-                              <h2 className="h5 mb-0">Title of section 4</h2>
-                              <span className="small text-secondary">
-                                <i className="fa fa-clock-o mr-1"></i>10
-                                October, 2019
-                              </span>
-                              <p className="text-small mt-2 font-weight-light">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Quisque scelerisque diam non
-                                nisi semper, et elementum lorem ornare. Maecenas
-                                placerat facilisis mollis. Duis sagittis ligula
-                                in sodales vehicula....
-                              </p>
-                              <p className="text-small mt-2 font-weight-light">
-                                Voluptatibus temporibus esse illum eum
-                                aspernatur, fugiat suscipit natus! Eum corporis
-                                illum nihil officiis tempore. Excepturi illo
-                                natus libero sit doloremque, laborum molestias
-                                rerum pariatur quam ipsam necessitatibus
-                                incidunt, explicabo.
-                              </p>
-                            </li>
                           </ul>
                         </div>
                       </div>
+                    ) : (
                       //timeline end
+                      // if no medical history
+                      <div className="text-white text-center mx-auto w-100">
+                        <p className="display-4 text-capitalize">
+                          great health
+                        </p>
+                        <p>
+                          whenver a doctor upload a prescription it will apper
+                          here
+                        </p>
+                      </div>
                     )}
                   </div>
                 </div>
