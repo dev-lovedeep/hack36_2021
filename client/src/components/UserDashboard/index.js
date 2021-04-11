@@ -5,7 +5,7 @@ import { UserContext } from "../../Contexts/UserContext";
 import socketioclient from "socket.io-client/dist/socket.io";
 import { useHistory } from "react-router";
 import Base from "../../pages/Base";
-import DashComp from "../DoctorDashboard/DashComp";
+import DashComp from "./DashComp";
 
 export default function UserDashboard() {
   const [user, setuser] = useContext(UserContext);

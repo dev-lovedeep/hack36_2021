@@ -64,7 +64,6 @@ export default function DashComp({ user, setUser }) {
                         nothing to worry
                       </p>
                     )}
-                    <button className="bg-danger px-3 py-1">Add</button>
                   </div>
                   <div></div>
                 </div>
@@ -172,40 +171,6 @@ export default function DashComp({ user, setUser }) {
                         </p>
                       </div>
                     )}
-                    <div className="container">
-                      <Accordion className="shadow">
-                        <Card className="rounded" key="0">
-                          <Card.Header style={{ cursor: "pointer" }}>
-                            <Accordion.Toggle
-                              as={Card.Header}
-                              eventKey="0"
-                              style={{ fontSize: "1.3rem" }}
-                            >
-                              Add Prescription
-                            </Accordion.Toggle>
-                          </Card.Header>
-                          <Accordion.Collapse eventKey="0">
-                            <Card.Body>
-                              <Form>
-                                <Form.Group controlId="formBasicEmail">
-                                  <Form.Control
-                                    type="text"
-                                    placeholder="Description"
-                                  />
-                                </Form.Group>
-
-                                <Form.Group controlId="formBasicPassword">
-                                  <input type="file" />
-                                </Form.Group>
-                                <Button variant="primary" type="submit">
-                                  Submit
-                                </Button>
-                              </Form>
-                            </Card.Body>
-                          </Accordion.Collapse>
-                        </Card>
-                      </Accordion>
-                    </div>
                   </div>
                 </div>
               </Tab.Pane>
