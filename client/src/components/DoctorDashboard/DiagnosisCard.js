@@ -14,7 +14,7 @@ export default function DiagnosisCard({ disease, severity }) {
       }}
       className="m-2"
     >
-      <h5 className={getSeverity()}>{disease}</h5>
+      <h5 className="px-3 py-3">{disease}</h5>
     </div>
   );
 }
