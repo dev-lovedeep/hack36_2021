@@ -36,8 +36,9 @@ const RouteMap = () => {
       var el = document.createElement('div');
       el.className = 'marker';
 
-      const marker = new mapboxgl.Marker(el).setLngLat([80.9462, 26.8467]).addTo(map);
-      // const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
+      // const marker = new mapboxgl.Marker(el).setLngLat([80.9462, 26.8467]).addTo(map);
+      const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
+
 
       socket.emit("addUser", user, (error) => {
         if (error) {
@@ -45,7 +46,7 @@ const RouteMap = () => {
         }
       });
 
-      // setInterval(() => {
+        map.on('click', function(e)
         {
         getCurrentLocation((position) => {
           const location = {
@@ -59,58 +60,15 @@ const RouteMap = () => {
             if(ambulance){
               console.log(location);
               console.log(ambulance);
-                getRoute(ambulance.location, [location.longitude, location.latitude]);
 
-                // var {route, duration} = ambulance;
-                // console.log(ambulance);
-                // console.log(typeof route);
-            
-                // console.log(route[0]);
-
-                // /* Use duration for displaying format="seconds"*/
-
-                // var geojson = {
-                //     type: 'Feature',
-                //     properties: {},
-                //     geometry: {
-                //       type: 'LineString',
-                //       coordinates: route
-                //     }
-                // }
-
-                // console.log(map.getSource('route'));
-
-                // if (map.getSource('route')) {
-                //   console.log("happened!");
-                //     map.getSource('route').setData(geojson);
-                //   } 
-                //   else { 
-                //     map.addLayer({
-                //       id: 'route',
-                //       type: 'line',
-                //       source: {
-                //         type: 'geojson',
-                //         data: geojson,
-                //       },
-                //       layout: {
-                //         'line-join': 'round',
-                //         'line-cap': 'round'
-                //       },
-                //       paint: {
-                //         'line-color': '#3887be',
-                //         'line-width': 5,
-                //         'line-opacity': 0.75
-                //       }
-                //     })
-                //   }
+              getRoute(ambulance.location, [location.longitude, location.latitude]);
 
             } else {
                 console.log(error);
             }
           });
         });
-      }
-      // }, 5000);
+      })
 
       const getRoute = (end, start) => {
 
@@ -119,12 +77,21 @@ const RouteMap = () => {
   
           var data = res.data.routes[0];
           var route = data.geometry.coordinates;
+
+          var e = document.createElement('div');
+          e.className = 'ambulance_marker';
+          const ambulanceMarker = new mapboxgl.Marker(e).setLngLat(end).addTo(map);
+
+          ambulanceMarker.setPopup(new mapboxgl.Popup().setHTML(`Estimated time: ${data.duration/60} mins`))
+          .addTo(map);
   
           console.log(route);
   
           var geojson = {
             type: 'Feature',
-            properties: {},
+            properties: {
+              duration: data.duration
+            },
             geometry: {
               type: 'LineString',
               coordinates: route
@@ -164,7 +131,6 @@ const RouteMap = () => {
     return (
       <div>
       <div className="map-container container-fluid" ref={mapContainerRef} />
-      {/* <button onClick={}>Get ambulance</button> */}
       </div>
     );
   };

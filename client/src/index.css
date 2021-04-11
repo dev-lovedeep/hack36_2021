@@ -29,6 +29,15 @@ code {
   cursor: pointer;
 }
 
+.ambulance_marker {
+  background-image: url("./img/save.png");
+  background-size: cover;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
 /* Timeline holder */
 ul.timeline {
   list-style-type: none;
