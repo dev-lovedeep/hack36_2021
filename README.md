@@ -6,10 +6,10 @@
 Every now and then, we hear people talking about ambulance delays for patients, sometimes caused due to admistrative emergency faults, or sometimes due to traffic problems. HealthyU is webapp which automates the process of finding nearest availble ambulance around the patient & predicting its arrival time. It also facilitates centralization of any patient's previous medical records, so it is easy to access them, if they are not readily availble, thus reducing the delay in medical assistance.
 
 ## Demo Video Link:
-  <a href="#">Demo link</a> for video presentation
+  <a href="https://drive.google.com/drive/folders/1aAg7vXf-pBG1gxY9EQ7GKhTUH8KSq8c0?usp=sharing">Demo link</a> for video presentation
   
 ## Presentation Link:
-  <a href="#"> Link </a> for slide presenatation 
+  <a href="https://drive.google.com/file/d/1lEfSBL3DzMxqxIVacjArAY7frJ36r1lT/view?usp=sharing"> Link </a> for slide presenatation 
 
 ## Table Of Contents
 - Get nearest ambulance at patient's doorstep
