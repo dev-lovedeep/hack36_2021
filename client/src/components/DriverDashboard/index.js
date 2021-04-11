@@ -56,17 +56,29 @@ export default function DriverDashboard() {
           );
         });
       });
+
+    //   setInterval(() => {
+    //   getCurrentLocation((position) => {
+    //     const location = {
+    //       latitude: position.coords.latitude,
+    //       longitude: position.coords.longitude,
+    //       accuracy: position.coords.accuracy,
+    //       speed: position.coords.speed,
+    //     };
+    //     socket.emit("sendLocation", location, () => {});
+    //   });
+    // }, 5000);
   }, [socket]);
-  // setInterval(() => {
-  //   getCurrentLocation((position) => {
-  //     const location = {
-  //       latitude: position.coords.latitude,
-  //       longitude: position.coords.longitude,
-  //       accuracy: position.coords.accuracy,
-  //       speed: position.coords.speed,
-  //     };
-  //     socket.emit("sendLocation", location, () => {});
-  //   });
-  // }, 5000);
+  setInterval(() => {
+    getCurrentLocation((position) => {
+      const location = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        accuracy: position.coords.accuracy,
+        speed: position.coords.speed,
+      };
+      socket.emit("sendLocation", location, () => {});
+    });
+  }, 5000);
   return <div>{driver.details.name}</div>;
 }
